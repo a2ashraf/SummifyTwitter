@@ -3,6 +3,7 @@ import os
 import keys
 import tweepy
 import openai
+import json
 
 MOST_RECENT_ID_CHECKED = "most_recent_checked.txt"
 
@@ -43,7 +44,8 @@ def get_mentions(api: tweepy.API):
 
 def post_tweet(api: tweepy.API, message: str, id: str = None):
     # api.update_status(message, auto_populate_reply_metadata=True)
-    api.update_status(message, in_reply_to_status_id=id, auto_populate_reply_metadata=True)
+    # api.update_status(message, in_reply_to_status_id=id, auto_populate_reply_metadata=True)
+    pass
 
 
 def get_tweets_text(api, tweet_id):
@@ -101,6 +103,15 @@ def write_to_file(file_path, text):
         return False
 
 
+def write_json_to_file(file_path, summary):
+    try:
+        with open(file_path, "w") as file:
+            json.dump(summary, file, indent=4)
+        return True
+    except:
+        return False
+
+
 def read_first_line(file_path):
     if not os.path.exists(file_path):
         with open(file_path, "w") as file:
@@ -110,6 +121,14 @@ def read_first_line(file_path):
     with open(file_path, "r") as file:
         first_line = file.readline().strip()
     return first_line
+
+
+def convert_to_json(summary, id):
+    json = {
+        "id": id,
+        "summary": summary
+    }
+    return json
 
 
 if __name__ == "__main__":
@@ -145,4 +164,9 @@ if __name__ == "__main__":
         else:
             summary = summaryze(keys.open_ai_key, thead_as_text)
             print(summary)
-            #post_tweet(api, "link here", id=tweet.id)
+            get_json_from_summary = convert_to_json(summary, tweet.id)
+            write_json_to_file(f'/Users/ahsana/Documents/development/summeryze/threads/{tweet.id}.json',
+                               get_json_from_summary)
+            # print(f'file:///Users/ahsana/Documents/development/summeryze/threads/{tweet.id}.json')
+            print(f'http://localhost:3000/page/{tweet.id}')
+            # post_tweet(api, "link here", id=tweet.id)
