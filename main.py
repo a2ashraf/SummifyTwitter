@@ -1,11 +1,13 @@
 import time
 
 import requests
+import schedule
+
 import keys
 import tweepy
 import openai
 import json
-import schedule
+
 import socket
 import os
 
@@ -184,6 +186,13 @@ def convert_to_json(summary, id, root_tweet):
     return json_string
 
 
+def print_bird():
+    print("              __")
+    print("          ___( o)>")
+    print("         \\ <_. )")
+    print("           `---'")
+
+
 def summaryze_where_needed(api, client):
     most_recent_checked = read_first_line(MOST_RECENT_ID_CHECKED)
     if most_recent_checked == "":
@@ -200,10 +209,7 @@ def summaryze_where_needed(api, client):
     write_to_file(MOST_RECENT_ID_CHECKED, str(most_recent_checked))
     for tweet in tweets.data:
 
-        print("       _")
-        print("    __(.)<")
-        print("    \\___)")
-        print("      / \\")
+        print_bird()
         print("\n\nChecking tweet:", tweet.text)
         thead_as_text = get_tweets_text(api, tweet.id)
         if thead_as_text == ALREADY_REPLIED:
