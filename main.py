@@ -225,7 +225,8 @@ def summaryze_where_needed(api, client):
             summary = summaryze(keys.open_ai_key, thead_as_text)
             print("Summary:", summary)
             get_json_from_summary = convert_to_json(summary, tweet.id, root_tweet)
-            write_json_to_file(f'/Users/ahsana/Documents/development/summeryze/threads/{tweet.id}.json',
+            root_path = get_root_path()
+            write_json_to_file(f'{root_path}/summeryze/threads/{tweet.id}.json',
                                get_json_from_summary)
             tiny_url = get_tiny_url(tweet)
             print("TinyURL:", tiny_url)
@@ -246,10 +247,17 @@ def get_tiny_url(tweet):
     return tiny_url
 
 
+def get_root_path():
+    if is_local_execution():
+        return "/Users/ahsana/Documents/development/summeryze"
+    else:
+        return "/home/sumgen/summeryze"
+
+
 def is_local_execution():
     hostname = socket.gethostname()
     print("Your Computer Name is:" + hostname)
-    if hostname == "Ahsans-MacBook-Pro.local":
+    if hostname == "Ahsans-Mac-mini.local":
         return True
 
 
