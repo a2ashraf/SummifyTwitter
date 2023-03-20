@@ -13,7 +13,7 @@ import os
 
 MOST_RECENT_ID_CHECKED = "most_recent_checked.txt"
 
-SEARCH_QUERY = "@a2ashraf spring-nose"
+SEARCH_QUERY = "@a2ashraf summarize"
 ALREADY_REPLIED = "Already replied to this tweet"
 IGNORE_RETWEETS = "IGNORE RETWEETS"
 IGNORE_TOO_MANY_MENTIONS = "I only reply to the original author"
