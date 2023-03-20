@@ -85,8 +85,8 @@ def create_tinyurl(api_token, url, domain=None, alias=None, tags=None, expires_a
 
 def post_tweet(api: tweepy.API, message: str, id: str = None):
     try:
-        # api.update_status(message, in_reply_to_status_id=id, auto_populate_reply_metadata=True)
-        api.update_status(message, auto_populate_reply_metadata=True)
+        api.update_status(message, in_reply_to_status_id=id, auto_populate_reply_metadata=True)
+        # api.update_status(message, auto_populate_reply_metadata=True)
         print("Tweet posted:", message)
     except tweepy.TweepyException as e:
         print("Failed to post tweet:", e)
