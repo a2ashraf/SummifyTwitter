@@ -195,10 +195,15 @@ def print_bird():
 
 def summaryze_where_needed(api, client):
     most_recent_checked = read_first_line(MOST_RECENT_ID_CHECKED)
-    if most_recent_checked == "":
-        tweets = client.search_recent_tweets(query=SEARCH_QUERY)
-    else:
-        tweets = client.search_recent_tweets(query=SEARCH_QUERY, since_id=most_recent_checked)
+    try:
+        if most_recent_checked == "":
+            tweets = client.search_recent_tweets(query=SEARCH_QUERY)
+        else:
+            tweets = client.search_recent_tweets(query=SEARCH_QUERY, since_id=most_recent_checked)
+
+    except Exception as e:
+        print("Error searching tweets:", e)
+        return
 
     if tweets.data is None:
         print("No tweets found")
@@ -226,7 +231,7 @@ def summaryze_where_needed(api, client):
             print("Summary:", summary)
             get_json_from_summary = convert_to_json(summary, tweet.id, root_tweet)
             root_path = get_root_path()
-            write_json_to_file(f'{root_path}/summeryze/threads/{tweet.id}.json',
+            write_json_to_file(f'{root_path}/threads/{tweet.id}.json',
                                get_json_from_summary)
             tiny_url = get_tiny_url(tweet)
             print("TinyURL:", tiny_url)
