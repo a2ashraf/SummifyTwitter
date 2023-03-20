@@ -242,8 +242,8 @@ def get_tiny_url(tweet):
         tiny_url = create_tinyurl(api_token=keys.tinyurl_key, url=f'http://localhost:3000/page/{tweet.id}')
     else:
         print(f"Summary page URL: https://summeryze.com/page/{tweet.id}")
-        tiny_url = create_tinyurl(api_token=keys.tinyurl_key, url=f'http://167.172.188.29:3000/page/{tweet.id}')
-        # tiny_url = create_tinyurl(api_token=keys.tinyurl_key, url=f'http://summeryze.com/page/{tweet.id}')
+        # tiny_url = create_tinyurl(api_token=keys.tinyurl_key, url=f'http://167.172.188.29:3000/page/{tweet.id}')
+        tiny_url = create_tinyurl(api_token=keys.tinyurl_key, url=f'http://summeryze.com/page/{tweet.id}')
 
     return tiny_url
 
@@ -266,9 +266,9 @@ auth = auth()
 api = api(auth)
 client = client(keys.bearer_token)
 print("starting")
-schedule.every(4).seconds.do(summaryze_where_needed, api, client)
+schedule.every(15).seconds.do(summaryze_where_needed, api, client)
 
 while True:
     schedule.run_pending()
     print("sleeping")
-    time.sleep(5)
+    time.sleep(10)
